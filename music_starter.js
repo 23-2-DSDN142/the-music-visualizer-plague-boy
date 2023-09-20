@@ -64,15 +64,15 @@ pop();
  fill("#B28ADE");
  scale(car_scale)
  beginShape(); //main car body
-  vertex(car_width,car_height+20); //top middle
-  vertex(car_width+200,car_height+20);
-  vertex(car_width+250,car_height+140);
-  vertex(car_width+300,car_height+180);
+  vertex(car_width,car_height-20); //top middle
+  vertex(car_width+200,car_height-20);
+  vertex(car_width+250,car_height+100);
+  vertex(car_width+300,car_height+140);
   vertex(car_width+300,car_height+250);
   vertex(car_width-300,car_height+250);
-  vertex(car_width-300,car_height+180);
-  vertex(car_width-250,car_height+140);
-  vertex(car_width-200,car_height+20);
+  vertex(car_width-300,car_height+140);
+  vertex(car_width-250,car_height+100);
+  vertex(car_width-200,car_height-20);
  endShape(CLOSE);
 pop()
 
@@ -82,12 +82,12 @@ push()
  fill("#A2DDEF")
  scale(car_scale)
  beginShape(); //car windsheld
-  vertex(car_width,car_height+32);
-  vertex(car_width+195,car_height+32);
-  vertex(car_width+235,car_height+140);
-  vertex(car_width-235,car_height+140);
-  vertex(car_width-195,car_height+32);
-  vertex(car_width,car_height+32);
+  vertex(car_width,car_height-8);
+  vertex(car_width+190,car_height-8);
+  vertex(car_width+230,car_height+100);
+  vertex(car_width-235,car_height+100);
+  vertex(car_width-190,car_height-8);
+  vertex(car_width,car_height-8);
  endShape(CLOSE);
 pop();
 
@@ -97,10 +97,10 @@ push(); //car hood
   fill("#C29BED");
   scale(car_scale)
  beginShape();
-  vertex(car_width+250,car_height+140);
-  vertex(car_width+300,car_height+180);
-  vertex(car_width-300,car_height+180);
-  vertex(car_width-250,car_height+140);
+  vertex(car_width+250,car_height+100);
+  vertex(car_width+300,car_height+140);
+  vertex(car_width-300,car_height+140);
+  vertex(car_width-250,car_height+100);
  endShape(CLOSE);
  pop();
 
@@ -110,10 +110,10 @@ push();//car front
   fill("#A47BD1");
   scale(car_scale)
  beginShape();
-  vertex(car_width+300,car_height+180);
+  vertex(car_width+300,car_height+140);
   vertex(car_width+300,car_height+250);
   vertex(car_width-300, car_height+250);
-  vertex(car_width-300,car_height+180);
+  vertex(car_width-300,car_height+140);
  endShape(CLOSE);
 pop();
 
@@ -123,10 +123,10 @@ push();//car bar
   fill(181);
   scale(car_scale);
  beginShape();
-  vertex(car_width+310,car_height+240);
+  vertex(car_width+310,car_height+230);
   vertex(car_width+310,car_height+270);
   vertex(car_width-310,car_height+270);
-  vertex(car_width-310,car_height+240)
+  vertex(car_width-310,car_height+230)
  endShape(CLOSE);
 pop();
 
