@@ -3,21 +3,101 @@
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
   background(20)
   //textFont('Helvetica'); // please use CSS safe fonts
-  rectMode(CENTER)
+  rectMode(CENTER);
   textSize(24);
  //Bass is the car moving up and down
- //let car_height
+var car_height = map(bass, 0, 100, 150, 100);
+let car_width = width/3;
+let car_scale = 1.5
+let backround = background
 
- push()
+//colour pallette <3
+let limeA = (190, 223, 153)
+
+ push();
+ stroke(255);
+ strokeWeight(3);
+ fill("#B28ADE");
+ scale(car_scale)
+ beginShape(); //main car body
+  vertex(car_width,car_height); //top middle
+  vertex(car_width+200,car_height);
+  vertex(car_width+250,car_height+90);
+  vertex(car_width+300,car_height+130);
+  vertex(car_width+300,car_height+200);
+  vertex(car_width-300,car_height+200);
+  vertex(car_width-300,car_height+130);
+  vertex(car_width-250,car_height+90);
+  vertex(car_width-200,car_height);
+ endShape(CLOSE);
+pop()
+
+push()
  stroke(255)
  strokeWeight(3)
- beginShape()
-  vertex(512,60+1*bass/2)
-  vertex(712,60+1*bass/2)
-  vertex()
- endShape(CLOSE)
- pop()
+ fill("#A2DDEF")
+ scale(car_scale)
+ beginShape(); //car windsheld
+  vertex(car_width,car_height+12);
+  vertex(car_width+195,car_height+12);
+  vertex(car_width+235,car_height+90);
+  vertex(car_width-235,car_height+90);
+  vertex(car_width-195,car_height+12);
+  vertex(car_width,car_height+12);
+ endShape(CLOSE);
+pop();
 
+push(); //car hood
+  stroke(255);
+  strokeWeight(3);
+  fill("#C29BED");
+  scale(car_scale)
+ beginShape();
+  vertex(car_width+250,car_height+90);
+  vertex(car_width+300,car_height+130);
+  vertex(car_width-300,car_height+130);
+  vertex(car_width-250,car_height+90);
+ endShape(CLOSE);
+ pop();
+
+push();//car front
+  stroke(255);
+  strokeWeight(3);
+  fill("#A47BD1");
+  scale(car_scale)
+ beginShape();
+  vertex(car_width+300,car_height+130);
+  vertex(car_width+300,car_height+200);
+  vertex(car_width-300, car_height+200);
+  vertex(car_width-300,car_height+130);
+ endShape(CLOSE);
+pop();
+
+push();//car bar
+  stroke(255);
+  strokeWeight(3);
+  fill(181);
+  scale(car_scale);
+ beginShape();
+  vertex(car_width+310,car_height+190);
+  vertex(car_width+310,car_height+220);
+  vertex(car_width-310,car_height+220);
+  vertex(car_width-310,car_height+190)
+ endShape(CLOSE);
+pop();
+
+push();
+  stroke(255);
+  strokeWeight(3);
+  fill("#EDE7D2");
+  scale(car_scale);
+ beginShape();
+  vertex(car_width+75,car_height+190);
+  vertex(car_width+75,car_height+250);
+  vertex(car_width-75,car_height+250);
+  vertex(car_width-75,car_height+190);
+ endShape(CLOSE);
+pop();
 
 
 }
