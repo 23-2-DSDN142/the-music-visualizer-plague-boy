@@ -64,15 +64,15 @@ pop();
  fill("#B28ADE");
  scale(car_scale)
  beginShape(); //main car body
-  vertex(car_width,car_height+50); //top middle
-  vertex(car_width+200,car_height+50);
+  vertex(car_width,car_height+20); //top middle
+  vertex(car_width+200,car_height+20);
   vertex(car_width+250,car_height+140);
   vertex(car_width+300,car_height+180);
   vertex(car_width+300,car_height+250);
   vertex(car_width-300,car_height+250);
   vertex(car_width-300,car_height+180);
   vertex(car_width-250,car_height+140);
-  vertex(car_width-200,car_height+50);
+  vertex(car_width-200,car_height+20);
  endShape(CLOSE);
 pop()
 
@@ -82,12 +82,12 @@ push()
  fill("#A2DDEF")
  scale(car_scale)
  beginShape(); //car windsheld
-  vertex(car_width,car_height+62);
-  vertex(car_width+195,car_height+62);
+  vertex(car_width,car_height+32);
+  vertex(car_width+195,car_height+32);
   vertex(car_width+235,car_height+140);
   vertex(car_width-235,car_height+140);
-  vertex(car_width-195,car_height+62);
-  vertex(car_width,car_height+62);
+  vertex(car_width-195,car_height+32);
+  vertex(car_width,car_height+32);
  endShape(CLOSE);
 pop();
 
