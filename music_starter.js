@@ -8,11 +8,35 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
  //Bass is the car moving up and down
 var car_height = map(bass, 0, 100, 150, 100);
 let car_width = width/3;
-let car_scale = 1.5
-let backround = background
+let car_scale = 1.5 ; 
+//let backround = background
 
-//colour pallette <3
-let limeA = (190, 223, 153)
+//colour pallette
+let limeA = (190, 223, 153);
+let limeB = (157, 191, 119);
+let limeC = (133, 166, 97);
+
+let lillacA = (194, 155, 237);
+let lillacB = (178, 138, 222);
+let lillacC = (164, 123, 209);
+
+let pinkA = (232, 150, 214);
+let pinkB = (209, 122, 190);
+let pinkC = (198, 109, 179);
+
+let yellowA = (244, 228, 125);
+let yellowB = (228, 212, 108);
+let yellowC = (209, 192, 84);
+
+let blueA = (162, 221, 239);
+let blueB = (138, 202, 222);
+let blueC = (133, 196, 216);
+
+let whiteA = (244, 238, 216);
+let whiteB = (237, 231, 210);
+let whiteC = (225, 219, 195);
+
+let wheelcolour = (28, 25, 31);
 
  push();
  stroke(255);
@@ -86,10 +110,10 @@ push();//car bar
  endShape(CLOSE);
 pop();
 
-push();
+push(); //Leisence plate
   stroke(255);
   strokeWeight(3);
-  fill("#EDE7D2");
+  fill(whiteA);
   scale(car_scale);
  beginShape();
   vertex(car_width+75,car_height+190);
@@ -98,6 +122,14 @@ push();
   vertex(car_width-75,car_height+190);
  endShape(CLOSE);
 pop();
+
+push();
+  textSize(40);
+  stroke(3);
+  fill(1);
+  text('G3TH1M',car_width+130,car_height+420)
+pop()
+
 
 
 }
