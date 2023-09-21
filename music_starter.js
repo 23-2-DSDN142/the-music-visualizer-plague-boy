@@ -5,41 +5,84 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   //textFont('Helvetica'); // please use CSS safe fonts
   rectMode(CENTER);
   textSize(24);
- //Bass is the car moving up and down
+
+//Bass is the car moving up and down
 var car_height = map(bass, 0, 100, 110, 80);
 let car_width = width/3;
 let car_scale = 1.5 ; 
+
+//Drum is the car's headlights
+var headlight_size = map(drum, 0, 100, 60, 100);
 //let backround = background
 
 //colour pallette
-let limeA = (190, 223, 153);
-let limeB = (157, 191, 119);
-let limeC = (133, 166, 97);
+let limeA = color(190, 223, 153);
+let limeB = color(157, 191, 119);
+let limeC = color(133, 166, 97);
 
-let lillacA = (194, 155, 237);
-let lillacB = (178, 138, 222);
-let lillacC = (164, 123, 209);
+let lillacA = color(194, 155, 237);
+let lillacB = color(178, 138, 222);
+let lillacC = color(164, 123, 209);
 
-let pinkA = (232, 150, 214);
-let pinkB = (209, 122, 190);
-let pinkC = (198, 109, 179);
+let pinkA = color(232, 150, 214);
+let pinkB = color(209, 122, 190);
+let pinkC = color(198, 109, 179);
 
-let yellowA = (244, 228, 125);
-let yellowB = (228, 212, 108);
-let yellowC = (209, 192, 84);
+let yellowA = color(244, 228, 125);
+let yellowB = color(228, 212, 108);
+let yellowC = color(209, 192, 84);
 
-let blueA = (162, 221, 239);
-let blueB = (138, 202, 222);
-let blueC = (133, 196, 216);
+let blueA = color(162, 221, 239);
+let blueB = color(138, 202, 222);
+let blueC = color(133, 196, 216);
 
-let whiteA = (244, 238, 216);
-let whiteB = (237, 231, 210);
-let whiteC = (225, 219, 195);
+let whiteA = color(244, 238, 216);
+let whiteB = color(237, 231, 210);
+let whiteC = color(225, 219, 195);
 
 let wheelcolour = (28, 25, 31);
-// //car which moves with the base
+//road
+push();
+  stroke(whiteA);
+  strokeWeight(10)
+  fill(whiteC);
+ beginShape();
+  vertex(0,720)
+  vertex(1280, 720)
+  vertex(1000,360)
+  vertex(280,360)
+ endShape(CLOSE);
+pop();
 
-push() //wheels
+//sky
+push()
+  let lerpMap = map(vocal,0,100,0,1)
+  let sky = lerpColor(pinkC,pinkA,lerpMap)
+ stroke(1);
+  strokeWeight(0);
+  fill(sky);
+ rect(640,180,1280,400)
+pop()
+
+//grass
+push();
+  stroke(limeC);
+  strokeWeight(10);
+  fill(limeA);
+beginShape();
+  vertex(0,720);
+  vertex(280,360);
+  vertex(0,360);
+endShape(CLOSE);
+beginShape();
+  vertex(1280,720);
+  vertex(1000,360);
+  vertex(1280,360);
+  endShape(CLOSE);
+pop();
+
+//car which moves with the base
+push() //wheelss
   stroke(255);
   strokeWeight(3);
   fill(wheelcolour);
@@ -150,6 +193,13 @@ push();
   text('G3TH1M',car_width+130,car_height+470)
 pop()
 
+push();
+  noStroke();
+  fill(yellowA)
+  scale(car_scale);
+  ellipse(car_width+230,car_height+185,headlight_size);
+  ellipse(car_width-230,car_height+185,headlight_size);
+pop();
 
 }
  
