@@ -45,12 +45,10 @@ let wheelcolour = (28, 25, 31);
 let firstRun=true
 if (firstRun){
   rectMode(CENTER);
-  driver = loadImage('assests/girl_1.png')
+  driver = loadImage('assets/girl_0.png')
   firstRun=false
 }
-background(20)
 
-image(driver,width/2,height/2)
 
 //Sunset/Sunrise
 if (song.currentTime()>10){
@@ -223,6 +221,9 @@ push();
   ellipse(car_width+230,car_height+185,headlight_size);
   ellipse(car_width-230,car_height+185,headlight_size);
 pop();
+
+driver.resize(500,500)
+image(driver,500,500)
 
 }
  
