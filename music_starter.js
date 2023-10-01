@@ -104,7 +104,7 @@ pop();
  push();
  stroke(255);
  strokeWeight(3);
- fill("#B28ADE");
+ fill(lillacB);
  scale(car_scale)
  beginShape(); //main car body
   vertex(car_width,car_height-20); //top middle
@@ -122,7 +122,7 @@ pop()
 push()
  stroke(255)
  strokeWeight(3)
- fill("#A2DDEF")
+ fill(blueA)
  scale(car_scale)
  beginShape(); //car windsheld
   vertex(car_width,car_height-8);
@@ -137,7 +137,7 @@ pop();
 push(); //car hood
   stroke(255);
   strokeWeight(1);
-  fill("#C29BED");
+  fill(lillacA);
   scale(car_scale)
  beginShape();
   vertex(car_width+250,car_height+100);
@@ -150,7 +150,7 @@ push(); //car hood
 push();//car front
   stroke(255);
   strokeWeight(3);
-  fill("#A47BD1");
+  fill(lillacC);
   scale(car_scale)
  beginShape();
   vertex(car_width+300,car_height+140);
