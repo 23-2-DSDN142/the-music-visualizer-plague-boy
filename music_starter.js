@@ -42,6 +42,16 @@ let whiteC = color(225, 219, 195);
 
 let wheelcolour = (28, 25, 31);
 
+let firstRun=true
+if (firstRun){
+  rectMode(CENTER);
+  driver = loadImage('assests/girl_1.png')
+  firstRun=false
+}
+background(20)
+
+image(driver,width/2,height/2)
+
 //Sunset/Sunrise
 if (song.currentTime()>10){
   push()
