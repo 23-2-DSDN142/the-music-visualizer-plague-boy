@@ -41,6 +41,29 @@ let whiteB = color(237, 231, 210);
 let whiteC = color(225, 219, 195);
 
 let wheelcolour = (28, 25, 31);
+
+//Sunset/Sunrise
+if (song.currentTime()>10){
+  push()
+  let lerpMap = map(vocal,0,100,0,1)
+  let sky = lerpColor(pinkC,pinkA,lerpMap)
+ stroke(1);
+  strokeWeight(0);
+  fill(sky);
+ rect(640,180,1280,400)
+pop()
+}
+else{
+push()
+  let lerpMap = map(vocal,0,100,0,1)
+  let sky = lerpColor(blueC,blueA,lerpMap)
+ stroke(1);
+  strokeWeight(0);
+  fill(sky);
+ rect(640,180,1280,400)
+pop()
+}
+
 //road
 push();
   stroke(whiteA);
@@ -53,16 +76,6 @@ push();
   vertex(280,360)
  endShape(CLOSE);
 pop();
-
-//sky
-push()
-  let lerpMap = map(vocal,0,100,0,1)
-  let sky = lerpColor(pinkC,pinkA,lerpMap)
- stroke(1);
-  strokeWeight(0);
-  fill(sky);
- rect(640,180,1280,400)
-pop()
 
 //grass
 push();
