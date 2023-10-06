@@ -1,5 +1,9 @@
 
 let firstRun=true
+//Road line that moves
+var roadMove = 560
+var skyWind = 360
+
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
   background(20)
@@ -16,7 +20,7 @@ let car_scale = 1.5 ;
 var headlight_size = map(drum, 0, 100, 60, 100);
 
 //The girls bopping and singing to the music
-//var girl_singing = map(vocal,0,150,80)
+var girl_singing = map(vocal,100,150,80)
 
 //let backround = background
 
@@ -89,6 +93,22 @@ push();
  endShape(CLOSE);
 pop();
 
+push();
+  strokeWeight(10);
+  stroke(whiteA);
+  fill(whiteA);
+beginShape();
+  vertex(645,roadMove);
+  vertex(650,roadMove+100);
+  vertex(630,roadMove+100);
+  vertex(635,roadMove);
+endShape(CLOSE);
+pop();
+roadMove = roadMove - 5;
+if (roadMove<360){
+  roadMove=720;
+};
+
 //grass
 push();
   stroke(limeC);
@@ -126,21 +146,6 @@ push() //wheelss
  endShape(CLOSE);
 pop();
 
-push()
- stroke(255)
- strokeWeight(3)
- fill(blueA)
- scale(car_scale)
- beginShape(); //car windsheld
-  vertex(car_width,car_height-8);
-  vertex(car_width+190,car_height-8);
-  vertex(car_width+230,car_height+100);
-  vertex(car_width-235,car_height+100);
-  vertex(car_width-190,car_height-8);
-  vertex(car_width,car_height-8);
- endShape(CLOSE);
-
-pop();
  push();
  stroke(255);
  strokeWeight(3);
@@ -159,15 +164,38 @@ pop();
  endShape(CLOSE);
 pop()
 
+push()
+ stroke(255)
+ strokeWeight(3)
+ fill(blueA)
+ scale(car_scale)
+ beginShape(); //car windsheld
+  vertex(car_width,car_height-8);
+  vertex(car_width+190,car_height-8);
+  vertex(car_width+230,car_height+100);
+  vertex(car_width-235,car_height+100);
+  vertex(car_width-190,car_height-8);
+  vertex(car_width,car_height-8);
+ endShape(CLOSE);
+ pop()
+
 //The girls singing in the car
 driver.resize(250,250);
-image(driver,300,150-vocal/2);
+image(driver,330,150-vocal/2);
+
+push();//steering wheel
+  stroke(0);
+  strokeWeight(10)
+  noFill();
+  scale(car_scale);
+  ellipse(car_width-122,car_height+115,80,80);
+pop();
 
 push(); //car hood
   stroke(255);
   strokeWeight(1);
   fill(lillacA);
-  scale(car_scale)
+  scale(car_scale);
  beginShape();
   vertex(car_width+250,car_height+100);
   vertex(car_width+300,car_height+140);
@@ -219,7 +247,7 @@ push();
   textSize(40);
   stroke(3);
   fill(1);
-  text('G3TH1M',car_width+130,car_height+470)
+  text('G3T H1M',car_width+120,car_height+470)
 pop()
 
 push();
