@@ -22,7 +22,9 @@ var headlight_size = map(drum, 0, 100, 60, 100);
 //The girls bopping and singing to the music
 var girl_singing = map(vocal,100,150,80)
 
-//let backround = background
+//background parameters and variables
+let roadX = 280
+let roadY = 360
 
 //colour pallette
 let limeA = color(190, 223, 153);
@@ -80,28 +82,27 @@ push()
 pop()
 }
 
-//road
-push();
+push(); //road
   stroke(whiteA);
   strokeWeight(10)
-  fill(whiteC);
+  fill(61);
  beginShape();
-  vertex(0,720)
-  vertex(1280, 720)
-  vertex(1000,360)
-  vertex(280,360)
+  vertex(roadX-roadX,roadY+360)
+  vertex(roadX+1000, roadY+360)
+  vertex(roadX+720,roadY)
+  vertex(roadX,roadY)
  endShape(CLOSE);
 pop();
 
-push();
+push(); //centerline
   strokeWeight(10);
   stroke(whiteA);
   fill(whiteA);
 beginShape();
-  vertex(645,roadMove);
-  vertex(650,roadMove+100);
-  vertex(630,roadMove+100);
-  vertex(635,roadMove);
+  vertex(roadX+365,roadMove);
+  vertex(roadX+370,roadMove+100);
+  vertex(roadX+350,roadMove+100);
+  vertex(roadX+355,roadMove);
 endShape(CLOSE);
 pop();
 roadMove = roadMove - 5;
