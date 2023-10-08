@@ -3,8 +3,8 @@ let firstRun=true
 //Road line that moves
 var roadMove = 560
 var skyWind = 360
-var treeMove = 160
-var treeScale = 1
+var treeMove = 150
+var treeScale = 3
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -27,7 +27,7 @@ var girl_singing = map(vocal,100,150,80)
 //background parameters and variables
 let roadX = 280
 let roadY = 360
-let treeX = 640
+let treeX = 100
 
 //colour pallette
 let limeA = color(190, 223, 153);
@@ -114,24 +114,35 @@ if (roadMove<360){
 };
 
 push(); //TREES!!!!
+  translate(660,280);
   strokeWeight(5);
   stroke(limeC);
   fill(limeB);
+  scale(treeScale);
 beginShape();
-  vertex(treeX,160);//top point
-  vertex(treeX+100,300);
-  vertex(treeX+60,300);
-  vertex(treeX+160,430);
-  vertex(treeX+120,430);
-  vertex(treeX+260,590);
-  vertex(treeX,590);//bottom point
-  vertex(treeX-260,590);
-  vertex(treeX-120,430);
-  vertex(treeX-160,430);
-  vertex(treeX-60,300);
-  vertex(treeX-100,300);
+  vertex(treeX,treeMove);//top point
+  vertex(treeX+100,treeMove+140);
+  vertex(treeX+60,treeMove+140);
+  vertex(treeX+160,treeMove+270);
+  vertex(treeX+120,treeMove+270);
+  vertex(treeX+260,treeMove+430);
+  vertex(treeX,treeMove+430);//bottom point
+  vertex(treeX-260,treeMove+430);
+  vertex(treeX-120,treeMove+270);
+  vertex(treeX-160,treeMove+270);
+  vertex(treeX-60,treeMove+140);
+  vertex(treeX-100,treeMove+140);
 endShape(CLOSE);
 pop();
+// treeMove = treeMove - (5-treeScale);
+treeScale = treeScale -.014;
+treeX = treeX +1000
+// if (treeMove<160){
+//   treeMove=720;
+// };
+if (treeScale<.5||treeMove<0){
+  treeScale=2;
+};
 
 // //grass
 // push();
