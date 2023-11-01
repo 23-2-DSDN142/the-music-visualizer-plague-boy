@@ -2,9 +2,14 @@
 let firstRun=true
 //Road line that moves
 var roadMove = 560
-var skyWind = 360
-var treeMove = 150
-var treeScale = 3
+var treeColour = 0
+var maxTreeColour = 100
+var cloudX_I = 0
+var cloudX_II = 600
+var cloudX_III = 1000
+var cloudX_V = -350
+var rabbit_run = 40000
+var bird_fly = -500
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -27,7 +32,10 @@ var girl_singing = map(vocal,100,150,80)
 //background parameters and variables
 let roadX = 280
 let roadY = 360
-let treeX = 100
+let treeX = 400
+let treeY = 0
+var trees_swaying = map(other,0,100,50,300)
+let cloudY = 150
 
 //colour pallette
 let limeA = color(190, 223, 153);
@@ -59,24 +67,32 @@ let wheelcolour = (28, 25, 31);
 if (firstRun){
   rectMode(CENTER);
   driver = loadImage('assets/girl_0.png')
+  rabbit = loadImage('assets/rabbit.png')
+  bird = loadImage('assets/bird.png')
   firstRun=false
 }
 
-
 //Sunset/Sunrise
-if (song.currentTime()>10){
-  push()
+if (song.currentTime()>120){
+  
   let lerpMap = map(vocal,0,100,0,1)
   let sky = lerpColor(pinkC,pinkA,lerpMap)
- stroke(1);
+ push();
+  stroke(1);
   strokeWeight(0);
   fill(sky);
  rect(640,180,1280,400)
-pop()
+ pop();
+ push();
+  noStroke();
+  fill(whiteA);
+  ellipse()
+ pop();
+
 }
 else{
 push()
-  let lerpMap = map(vocal,0,100,0,1)
+  var lerpMap = map(vocal,0,100,0,1)
   let sky = lerpColor(blueC,blueA,lerpMap)
  stroke(1);
   strokeWeight(0);
@@ -84,6 +100,51 @@ push()
  rect(640,180,1280,400)
 pop()
 }
+
+push(); //flying bird
+bird.resize(75,75);
+image(bird, bird_fly, 50);
+bird_fly = bird_fly + 2.5
+if (bird<300){
+  bird=-300
+}
+pop();
+
+push();//clouds
+  noStroke();
+  fill(whiteA);
+  ellipse(cloudX_I+100, cloudY, 150,150);
+  ellipse(cloudX_I+25, cloudY+15, 100, 100);
+  ellipse(cloudX_I+150, cloudY+5, 125, 125);
+  cloudX_I = cloudX_I + 2;
+  if (cloudX_I>1400){
+    cloudX_I=-300
+  }
+
+  ellipse(cloudX_II+100, cloudY-90, 100,100);
+  ellipse(cloudX_II+40, cloudY-80, 90, 90);
+  ellipse(cloudX_II+150, cloudY-80, 75, 75);
+  cloudX_II = cloudX_II + 2;
+  if (cloudX_II>1400){
+    cloudX_II=-300
+  }
+
+  ellipse(cloudX_III+50, cloudY, 200,200);
+  ellipse(cloudX_III-25, cloudY+15, 150, 150);
+  ellipse(cloudX_III+125, cloudY+25, 135, 135);
+  cloudX_III = cloudX_III + 2;
+  if (cloudX_III>1400){
+    cloudX_III=-300
+  }
+
+  ellipse(cloudX_V+98, cloudY+125, 30, 30);
+  ellipse(cloudX_V+70, cloudY+115, 50, 50);
+  ellipse(cloudX_V+35, cloudY+120, 40, 40);
+  cloudX_V = cloudX_V + 2;
+  if (cloudX_V>1400){
+    cloudX_V=-300
+  }
+pop();
 
 push(); //road
   stroke(whiteA);
@@ -113,183 +174,708 @@ if (roadMove<360){
   roadMove=720;
 };
 
-push(); //TREES!!!!
-  translate(660,280);
+//grass
+push();
+  stroke(limeC);
+  strokeWeight(10);
+  fill(limeA);
+beginShape();
+  vertex(0,720);
+  vertex(280,360);
+  vertex(0,360);
+endShape(CLOSE);
+beginShape();
+  vertex(1280,720);
+  vertex(1000,360);
+  vertex(1280,360);
+  endShape(CLOSE);
+pop();
+
+if (treeColour % 30 === 0 && treeColour <= maxTreeColour) {//is divisable by 5 //CHAT GPT USED TO FIGURE OUT HOW TO GET CODE TO SHOW TRUE TO VALUE
+  push(); //Trees on the Left
   strokeWeight(5);
   stroke(limeC);
+  push(); //L Tree 1
+  fill(limeC);
+    translate(roadX-345,roadY-100);
+    scale(.5);
+  beginShape();
+    vertex(trees_swaying+500,treeY-200);//top point
+    vertex(trees_swaying/2+600,treeY-60);
+    vertex(trees_swaying/2+560,treeY-60);
+    vertex(trees_swaying/4+660,treeY+70);
+    vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 2
   fill(limeB);
-  scale(treeScale);
-beginShape();
-  vertex(treeX,treeMove);//top point
-  vertex(treeX+100,treeMove+140);
-  vertex(treeX+60,treeMove+140);
-  vertex(treeX+160,treeMove+270);
-  vertex(treeX+120,treeMove+270);
-  vertex(treeX+260,treeMove+430);
-  vertex(treeX,treeMove+430);//bottom point
-  vertex(treeX-260,treeMove+430);
-  vertex(treeX-120,treeMove+270);
-  vertex(treeX-160,treeMove+270);
-  vertex(treeX-60,treeMove+140);
-  vertex(treeX-100,treeMove+140);
+  translate(roadX-490,roadY-100);
+    scale(.65);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 3
+  fill(limeC);
+  translate(roadX-635,roadY-100);
+    scale(.8);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 4
+  fill(limeB);
+  translate(roadX-825,roadY-100);
+    scale(1);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 5
+  fill(limeC);
+  translate(roadX-1060,roadY-100);
+    scale(1.25);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 6
+  fill(limeB);
+  translate(roadX-1345,roadY-100);
+    scale(1.55);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 7
+  fill(limeC);
+  translate(roadX-1665,roadY-100);
+    scale(1.9);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  //Trees on the right
+  strokeWeight(5);
+  stroke(limeC);
+  push(); //R Tree 1
+  fill(limeC);
+    translate(roadX+565,roadY-100);
+    scale(.5);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 2
+  fill(limeB);
+  translate(roadX+550,roadY-100);
+    scale(.65);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 3
+  fill(limeC);
+  translate(roadX+545,roadY-100);
+    scale(.8);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 4
+  fill(limeB);
+  translate(roadX+535,roadY-100);
+    scale(1);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 5
+  fill(limeC);
+  translate(roadX+520,roadY-100);
+    scale(1.25);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 6
+  fill(limeB);
+  translate(roadX+505,roadY-100);
+    scale(1.55);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 7
+  fill(limeC);
+  translate(roadX+485,roadY-100);
+    scale(1.9);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  pop();
+}
+else{
+  push(); //Trees on the Left
+  strokeWeight(5);
+  stroke(limeC);
+  push(); //L Tree 1
+  fill(limeB);
+    translate(roadX-345,roadY-100);
+    scale(.5);
+  beginShape();
+    vertex(trees_swaying+500,treeY-200);//top point
+    vertex(trees_swaying/2+600,treeY-60);
+    vertex(trees_swaying/2+560,treeY-60);
+    vertex(trees_swaying/4+660,treeY+70);
+    vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 2
+  fill(limeC);
+  translate(roadX-490,roadY-100);
+    scale(.65);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 3
+  fill(limeB);
+  translate(roadX-635,roadY-100);
+    scale(.8);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 4
+  fill(limeC);
+  translate(roadX-825,roadY-100);
+    scale(1);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 5
+  fill(limeB);
+  translate(roadX-1060,roadY-100);
+    scale(1.25);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 6
+  fill(limeC);
+  translate(roadX-1345,roadY-100);
+    scale(1.55);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //L Tree 7
+  fill(limeB);
+  translate(roadX-1665,roadY-100);
+    scale(1.9);
+  beginShape();
+  vertex(trees_swaying+500,treeY-200);//top point
+  vertex(trees_swaying/2+600,treeY-60);
+  vertex(trees_swaying/2+560,treeY-60);
+  vertex(trees_swaying/4+660,treeY+70);
+  vertex(trees_swaying/4+620,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  //Trees on the right
+  strokeWeight(5);
+  stroke(limeC);
+  push(); //R Tree 1
+  fill(limeB);
+    translate(roadX+565,roadY-100);
+    scale(.5);
+  beginShape();
+    vertex(-trees_swaying+500,treeY-200);//top point
+    vertex(treeX+200,treeY-60);
+    vertex(treeX+160,treeY-60);
+    vertex(treeX+260,treeY+70);
+    vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(-trees_swaying/4+380,treeY+70);
+    vertex(-trees_swaying/4+340,treeY+70);
+    vertex(-trees_swaying/2+440,treeY-60);
+    vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 2
+  fill(limeC);
+  translate(roadX+550,roadY-100);
+    scale(.65);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 3
+  fill(limeB);
+  translate(roadX+545,roadY-100);
+    scale(.8);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 4
+  fill(limeC);
+  translate(roadX+535,roadY-100);
+    scale(1);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 5
+  fill(limeB);
+  translate(roadX+520,roadY-100);
+    scale(1.25);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 6
+  fill(limeC);
+  translate(roadX+505,roadY-100);
+    scale(1.55);
+  beginShape();
+  vertex(treeX+100,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+    vertex(treeX+360,treeY+230);
+    vertex(treeX+200,treeY+230);//bottom point
+    vertex(treeX-160,treeY+230);
+    vertex(treeX-20,treeY+70);
+    vertex(treeX-60,treeY+70);
+    vertex(treeX+40,treeY-60);
+    vertex(treeX,treeY-60);
+  endShape(CLOSE);
+  pop();
+  push(); //R Tree 7
+  fill(limeB);
+  translate(roadX+485,roadY-100);
+    scale(1.9);
+  beginShape();
+  vertex(-trees_swaying+500,treeY-200);//top point
+  vertex(treeX+200,treeY-60);
+  vertex(treeX+160,treeY-60);
+  vertex(treeX+260,treeY+70);
+  vertex(treeX+220,treeY+70);
+  vertex(treeX+360,treeY+230);
+  vertex(treeX+200,treeY+230);//bottom point
+  vertex(treeX-160,treeY+230);
+  vertex(-trees_swaying/4+380,treeY+70);
+  vertex(-trees_swaying/4+340,treeY+70);
+  vertex(-trees_swaying/2+440,treeY-60);
+  vertex(-trees_swaying/2+400,treeY-60);
+  endShape(CLOSE);
+  pop();
+  pop();
+}
+
+if (treeColour >= maxTreeColour) { //CHAT GPT, BASED OFF OF MY OWN ROADMOVE CODE
+  treeColour = 0; // Reset treeColour after reaching maxTreeColour
+} else {
+  treeColour = treeColour + 5; // Increment treeColour by 5 for the next frame
+}
+
+
+//car which moves with the base
+push() //wheelss
+  stroke(255);
+  strokeWeight(3);
+  fill(wheelcolour);
+  scale(car_scale);
+ beginShape();//Wheel L
+  vertex(car_width-275,350);
+  vertex(car_width-275,425);
+  vertex(car_width-225,425);
+  vertex(car_width-225,350);
+ endShape(CLOSE); 
+ beginShape(); //Wheel R
+  vertex(car_width+275,350);
+  vertex(car_width+275,425);
+  vertex(car_width+225,425);
+  vertex(car_width+225,350);
+ endShape(CLOSE);
+pop();
+
+
+push();
+  stroke(255);
+  strokeWeight(3);
+  fill(lillacB);
+  scale(car_scale);
+  beginShape();
+  vertex(car_width,car_height-20);
+  vertex(car_width+200,car_height-20); 
+  vertex(car_width+250,car_height+100);
+  vertex(car_width+230,car_height+100);
+  vertex(car_width+190,car_height-8);
+  vertex(car_width,car_height-8);
+  vertex(car_width-190,car_height-8);
+  vertex(car_width-230,car_height+100);
+  vertex(car_width-250,car_height+100);
+  vertex(car_width-200,car_height-20);
 endShape(CLOSE);
 pop();
-// treeMove = treeMove - (5-treeScale);
-treeScale = treeScale -.014;
-treeX = treeX +1000
-// if (treeMove<160){
-//   treeMove=720;
-// };
-if (treeScale<.5||treeMove<0){
-  treeScale=2;
-};
 
-// //grass
-// push();
-//   stroke(limeC);
-//   strokeWeight(10);
-//   fill(limeA);
-// beginShape();
-//   vertex(0,720);
-//   vertex(280,360);
-//   vertex(0,360);
-// endShape(CLOSE);
-// beginShape();
-//   vertex(1280,720);
-//   vertex(1000,360);
-//   vertex(1280,360);
-//   endShape(CLOSE);
-// pop();
+//The girl singing in the car
+driver.resize(275,275);
+image(driver,330,115-vocal/2);
 
-// //car which moves with the base
-// push() //wheelss
-//   stroke(255);
-//   strokeWeight(3);
-//   fill(wheelcolour);
-//   scale(car_scale);
-//  beginShape();//Wheel L
-//   vertex(car_width-275,350);
-//   vertex(car_width-275,425);
-//   vertex(car_width-225,425);
-//   vertex(car_width-225,350);
-//  endShape(CLOSE); 
-//  beginShape(); //Wheel R
-//   vertex(car_width+275,350);
-//   vertex(car_width+275,425);
-//   vertex(car_width+225,425);
-//   vertex(car_width+225,350);
-//  endShape(CLOSE);
-// pop();
+push();//steering wheel
+  stroke(0);
+  strokeWeight(10)
+  noFill();
+  scale(car_scale);
+  ellipse(car_width-115,car_height+125,100,100);
+pop();
 
-//  push();
-//  stroke(255);
-//  strokeWeight(3);
-//  fill(lillacB);
-//  scale(car_scale)
-//  beginShape(); //main car body
-//   vertex(car_width,car_height-20); //top middle
-//   vertex(car_width+200,car_height-20);
-//   vertex(car_width+250,car_height+100);
-//   vertex(car_width+300,car_height+140);
-//   vertex(car_width+300,car_height+250);
-//   vertex(car_width-300,car_height+250);
-//   vertex(car_width-300,car_height+140);
-//   vertex(car_width-250,car_height+100);
-//   vertex(car_width-200,car_height-20);
-//  endShape(CLOSE);
-// pop()
+push(); //car hood
+  stroke(255);
+  strokeWeight(1);
+  fill(lillacA);
+  scale(car_scale);
+ beginShape();
+  vertex(car_width+250,car_height+100);
+  vertex(car_width+300,car_height+140);
+  vertex(car_width-300,car_height+140);
+  vertex(car_width-250,car_height+100);
+ endShape(CLOSE);
+ pop();
 
-// push()
-//  stroke(255)
-//  strokeWeight(3)
-//  fill(blueA)
-//  scale(car_scale)
-//  beginShape(); //car windsheld
-//   vertex(car_width,car_height-8);
-//   vertex(car_width+190,car_height-8);
-//   vertex(car_width+230,car_height+100);
-//   vertex(car_width-235,car_height+100);
-//   vertex(car_width-190,car_height-8);
-//   vertex(car_width,car_height-8);
-//  endShape(CLOSE);
-//  pop()
+push();//car front
+  stroke(255);
+  strokeWeight(3);
+  fill(lillacC);
+  scale(car_scale)
+ beginShape();
+  vertex(car_width+300,car_height+140);
+  vertex(car_width+300,car_height+250);
+  vertex(car_width-300, car_height+250);
+  vertex(car_width-300,car_height+140);
+ endShape(CLOSE);
+pop();
 
-// //The girls singing in the car
-// driver.resize(250,250);
-// image(driver,330,150-vocal/2);
+push();//car bar
+  stroke(255);
+  strokeWeight(3);
+  fill(181);
+  scale(car_scale);
+ beginShape();
+  vertex(car_width+310,car_height+230);
+  vertex(car_width+310,car_height+270);
+  vertex(car_width-310,car_height+270);
+  vertex(car_width-310,car_height+230)
+ endShape(CLOSE);
+pop();
 
-// push();//steering wheel
-//   stroke(0);
-//   strokeWeight(10)
-//   noFill();
-//   scale(car_scale);
-//   ellipse(car_width-122,car_height+115,80,80);
-// pop();
+push(); //Leisence plate
+  stroke(255);
+  strokeWeight(3);
+  fill(whiteA);
+  scale(car_scale);
+ beginShape();
+  vertex(car_width+75,car_height+240);
+  vertex(car_width+75,car_height+300);
+  vertex(car_width-75,car_height+300);
+  vertex(car_width-75,car_height+240);
+ endShape(CLOSE);
+pop();
 
-// push(); //car hood
-//   stroke(255);
-//   strokeWeight(1);
-//   fill(lillacA);
-//   scale(car_scale);
-//  beginShape();
-//   vertex(car_width+250,car_height+100);
-//   vertex(car_width+300,car_height+140);
-//   vertex(car_width-300,car_height+140);
-//   vertex(car_width-250,car_height+100);
-//  endShape(CLOSE);
-//  pop();
+push();
+  textSize(40);
+  stroke(3);
+  fill(1);
+  text('G3T H1M',car_width+120,car_height+470)
+pop();
 
-// push();//car front
-//   stroke(255);
-//   strokeWeight(3);
-//   fill(lillacC);
-//   scale(car_scale)
-//  beginShape();
-//   vertex(car_width+300,car_height+140);
-//   vertex(car_width+300,car_height+250);
-//   vertex(car_width-300, car_height+250);
-//   vertex(car_width-300,car_height+140);
-//  endShape(CLOSE);
-// pop();
+push();
+  noStroke();
+  fill(yellowA)
+  scale(car_scale);
+  ellipse(car_width+230,car_height+185,headlight_size);
+  ellipse(car_width-230,car_height+185,headlight_size);
+pop();
 
-// push();//car bar
-//   stroke(255);
-//   strokeWeight(3);
-//   fill(181);
-//   scale(car_scale);
-//  beginShape();
-//   vertex(car_width+310,car_height+230);
-//   vertex(car_width+310,car_height+270);
-//   vertex(car_width-310,car_height+270);
-//   vertex(car_width-310,car_height+230)
-//  endShape(CLOSE);
-// pop();
-
-// push(); //Leisence plate
-//   stroke(255);
-//   strokeWeight(3);
-//   fill(whiteA);
-//   scale(car_scale);
-//  beginShape();
-//   vertex(car_width+75,car_height+240);
-//   vertex(car_width+75,car_height+300);
-//   vertex(car_width-75,car_height+300);
-//   vertex(car_width-75,car_height+240);
-//  endShape(CLOSE);
-// pop();
-
-// push();
-//   textSize(40);
-//   stroke(3);
-//   fill(1);
-//   text('G3T H1M',car_width+120,car_height+470)
-// pop()
-
-// push();
-//   noStroke();
-//   fill(yellowA)
-//   scale(car_scale);
-//   ellipse(car_width+230,car_height+185,headlight_size);
-//   ellipse(car_width-230,car_height+185,headlight_size);
-// pop();
+push(); //running rabbit
+rabbit.resize(250,250);
+image(rabbit, rabbit_run, 500);
+rabbit_run = rabbit_run - 30
+if (rabbit_run<-35000){
+  rabbit_run=35000
 }
+pop();
+
+}
+
